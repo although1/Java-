@@ -60,9 +60,9 @@ List第一次创建的时候，会有一个初始大小，随着不断向List中
 
 ArrayList底层是用数组实现的，可以认为ArrayList是一个可改变大小的数组。随着越来越多的元素被添加到ArrayList中，其规模是动态增加的。
 
-LinkedList底层是通过双向链表实现的， LinkedList和ArrayList相比，增删的速度较快。但是查询和修改值的速度较慢。同时，LinkedList还实现了Queue接口，所以他还提供了offer(),
+LinkedList底层是通过双向链表实现的， LinkedList和ArrayList相比，增删的速度较快。但是查询和修改值的速度较慢。同时，LinkedList还实现了Queue接口，所以他还提供了offer(),peek(), poll()等方法。
 
-peek(), poll()等方法。
+相同点，两者都是多线程，线程不安全
 
 使用场景
 

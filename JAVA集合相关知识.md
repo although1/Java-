@@ -44,41 +44,7 @@ HashSet和LinkedHashSet 都是不同步，也就是线程不安全
 
 在使用add方法的时候，add会调用元素的hashCode()和toString() ，判断元素是否重复
 
-### **HashMap和HashTable实现原理**
 
-HashMap具体原理参考文章：
-
-http://zhangshixi.iteye.com/blog/672697
-
-http://www.admin10000.com/document/3322.html
-
-HashTable具体原理参考文章：
-
-http://www.cnblogs.com/skywang12345/p/3310887.html
-
-http://blog.csdn.net/chdjj/article/details/38581035
-
-### **HashMap和HashTable区别**
-
-1）HashTable的方法前面都有synchronized来同步，是线程安全的；HashMap未经同步，是非线程安全的。
-
-2）HashTable不允许null值(key和value都不可以) ；HashMap允许null值(key和value都可以)。
-
-3）HashTable有一个contains(Object value)功能和containsValue(Object value)功能一样。
-
-4）HashTable使用Enumeration进行遍历；HashMap使用Iterator进行遍历。
-
-5）HashTable中hash数组默认大小是11，增加的方式是old*2+1；HashMap中hash数组的默认大小是16，而且一定是2的指数。
-
-6）哈希值的使用不同，HashTable直接使用对象的hashCode； HashMap重新计算hash值，而且用与代替求模。
-
-### **Concurrenthashmap实现原理**
-
-具体原理参考文章：
-
-http://www.cnblogs.com/ITtangtang/p/3948786.html
-
-http://ifeve.com/concurrenthashmap/
 
 ### **ArrayList和vector区别**
 
@@ -112,3 +78,78 @@ java.util.Collections 是一个包装类（比如 sort() 、addAll()（添加一
 
 > D:\dogdog\java\javatest\src\collections\CollectionsDemo01.java
 
+### **HashMap和HashTable实现原理**
+
+HashMap具体原理参考文章：
+
+http://zhangshixi.iteye.com/blog/672697
+
+http://www.admin10000.com/document/3322.html
+
+HashTable具体原理参考文章：
+
+http://www.cnblogs.com/skywang12345/p/3310887.html
+
+http://blog.csdn.net/chdjj/article/details/38581035
+
+### Map的特点
+
+1、键不能重复
+
+2、双列集合，一个元素包含两个值（Key和Value）
+
+3、Map集合中的元素，key和value的数据类型可以相同，也可以不同
+
+#### HashMap集合的特点
+
+implement Map<k,v>接口
+
+1、底层是哈希表：查询的速度特别快
+
+​		JDK1.8之前：数组+单向链表
+
+​		JDK1.8开始：数组+单向链表/红黑树（链表的长度超过8）：提高查询到额速度
+
+2、该集合是一个无序的集合，存储元素和取出元素的顺序又可能不一致
+
+#### LinkedHashMap集合的特点
+
+extends HashMap<k,v>集合
+
+1、底层是哈希表+链表
+
+2、是一个有序的集合，存储和取出元素顺序是一致的
+
+
+
+### **HashMap和HashTable区别**
+
+1）HashTable的方法前面都有synchronized来同步，是线程安全的；HashMap未经同步，是非线程安全的。
+
+2）HashTable不允许null值(key和value都不可以) ；HashMap允许null值(key和value都可以)。
+
+3）HashTable有一个contains(Object value)功能和concontainsValue(Object value)功能一样。
+
+​		而HashMap 对应的concontainsValue(Object value)，只有这一个
+
+4）HashTable使用Enumeration进行遍历；HashMap使用Iterator进行遍历。
+
+5）HashTable中hash数组默认大小是11，增加的方式是old*2+1；HashMap中hash数组的默认大小是16，而且一定是2的指数。
+
+6）哈希值的使用不同，HashTable直接使用对象的hashCode； HashMap重新计算hash值，而且用与代替求模。
+
+### **Concurrenthashmap实现原理**
+
+具体原理参考文章：
+
+http://www.cnblogs.com/ITtangtang/p/3948786.html
+
+http://ifeve.com/concurrenthashmap/
+
+
+
+### HashMap面试题
+
+还是要看懂源码才行
+
+ https://www.cnblogs.com/zengcongcong/p/11295349.html 

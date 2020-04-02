@@ -62,29 +62,21 @@ String类是final类故不可以继承，一切由final修饰过的都不能继�
 
 可变性
 
-String类中使用字符数组保存字符串，private
-
-final char value[]，所以string对象是不可变的。StringBuilder与StringBuffer都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串，char[]
-
-value，这两种对象都是可变的。
+String类中使用字符数组保存字符串，private final char value[]，所以string对象是不可变的。StringBuilder与StringBuffer都继承自AbstractStringBuilder类，在AbstractStringBuilder中也是使用字符数组保存字符串，char[] value，这两种对象都是可变的。
 
 线程安全性
 
-String中的对象是不可变的，也就可以理解为常量，线程安全。AbstractStringBuilder是StringBuilder与StringBuffer的公共父类，定义了一些字符串的基本操作，如expandCapacity、append、insert、indexOf等公共方法。StringBuffer对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的。StringBuilder并没有对方法进行加同步锁，所以是非线程安全的。
+String中的对象是不可变的，也就可以理解为常量，线程安全。AbstractStringBuilder是StringBuilder与StringBuffer的公共父类，定义了一些字符串的基本操作，如expandCapacity、append、insert、indexOf等公共方法。
+
+StringBuffer对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的。
+
+StringBuilder并没有对方法进行加同步锁，所以是非线程安全的。
 
 性能
 
-每次对String 类型进行改变的时候，都会生成一个新的String 对象，然后将指针指向新的String 对象。StringBuffer每次都会对
+每次对String 类型进行改变的时候，都会生成一个新的String 对象，然后将指针指向新的String 对象。StringBuffer每次都会对StringBuffer 对象本身进行操作，而不是生成新的对象并改变对象引用。相同情况下使用
 
-StringBuffer 对象本身进行操作，而不是生成新的对象并改变对象引用。相同情况下使用
-
-StirngBuilder 相比使用
-
-StringBuffer 仅能获得10%~15% 左右的性能提升，但却要冒多线程不安全的风险。
-
-### **8.hashCode和equals方法的关系**
-
-equals相等，hashcode必相等；hashcode相等，equals可能不相等。
+StirngBuilder 相比使用StringBuffer 仅能获得10%~15% 左右的性能提升，但却要冒多线程不安全的风险。
 
 ### **9.抽象类和接口的区别**
 
@@ -124,41 +116,7 @@ Java编译器生成的字节码是不包涵泛型信息的，泛型类型信息�
 
 2）.移除所有的类型参数。
 
-### **20.Error、Exception区别**
 
-Error类和Exception类的父类都是throwable类，他们的区别是：
-
-Error类一般是指与虚拟机相关的问题，如系统崩溃，虚拟机错误，内存空间不足，方法调用栈溢等。对于这类错误的导致的应用程序中断，仅靠程序本身无法恢复和和预防，遇到这样的错误，建议让程序终止。
-
-Exception类表示程序可以处理的异常，可以捕获且可能恢复。遇到这类异常，应该尽可能处理异常，使程序恢复运行，而不应该随意终止异常。
-
-### **21.Unchecked**
-
-Exception和Checked Exception，各列举几个#
-
-Unchecked Exception:
-
-a. 指的是程序的瑕疵或逻辑错误，并且在运行时无法恢复。
-
-b. 包括Error与RuntimeException及其子类，如：OutOfMemoryError,
-
-UndeclaredThrowableException, IllegalArgumentException,
-
-IllegalMonitorStateException, NullPointerException, IllegalStateException,
-
-IndexOutOfBoundsException等。
-
-c. 语法上不需要声明抛出异常。
-
-Checked Exception:
-
-a. 代表程序不能直接控制的无效外界情况（如用户输入，数据库问题，网络异常，文件丢失等）
-
-b. 除了Error和RuntimeException及其子类之外，如：ClassNotFoundException,
-
-NamingException, ServletException, SQLException, IOException等。
-
-c. 需要try catch处理或throws声明抛出异常。
 
 ### **22.Java中如何实现代理机制(JDK、CGLIB)**
 
@@ -166,49 +124,7 @@ JDK动态代理：代理类和目标类实现了共同的接口，用到Invocati
 
 CGLIB动态代理：代理类是目标类的子类，用到MethodInterceptor接口。
 
-### **37.java并发包concurrent及常用的类**
 
-这个内容有点多，参考文章：
-
-并发包诸类概览：http://www.raychase.net/1912
-
-线程池：http://www.cnblogs.com/dolphin0520/p/3932921.html
-
-锁：http://www.cnblogs.com/dolphin0520/p/3923167.html
-
-集合：http://www.cnblogs.com/huangfox/archive/2012/08/16/2642666.html
-
-### **38.volatile关键字**
-
-用volatile修饰的变量，线程在每次使用变量的时候，都会读取变量修改后的最的值。volatile很容易被误用，用来进行原子性操作。
-
-Java语言中的volatile变量可以被看作是一种“程度较轻的
-
-synchronized”；与
-
-synchronized 块相比，volatile 变量所需的编码较少，并且运行时开销也较少，但是它所能实现的功能也仅是synchronized的一部分。锁提供了两种主要特性：互斥（mutual
-
-exclusion）和可见性（visibility）。互斥即一次只允许一个线程持有某个特定的锁，因此可使用该特性实现对共享数据的协调访问协议，这样，一次就只有一个线程能够使用该共享数据。可见性必须确保释放锁之前对共享数据做出的更改对于随后获得该锁的另一个线程是可见的，如果没有同步机制提供的这种可见性保证，线程看到的共享变量可能是修改前的值或不一致的值，这将引发许多严重问题。Volatile变量具有synchronized的可见性特性，但是不具备原子特性。这就是说线程能够自动发现volatile
-
-变量的最新值。
-
-要使volatile变量提供理想的线程安全，必须同时满足下面两个条件：对变量的写操作不依赖于当前值；该变量没有包含在具有其他变量的不变式中。
-
-第一个条件的限制使volatile变量不能用作线程安全计数器。虽然增量操作（x++）看上去类似一个单独操作，实际上它是一个由读取－修改－写入操作序列组成的组合操作，必须以原子方式执行，而volatile不能提供必须的原子特性。实现正确的操作需要使x 的值在操作期间保持不变，而volatile
-
-变量无法实现这点。
-
-每一个线程运行时都有一个线程栈，线程栈保存了线程运行时候变量值信息。当线程访问某一个对象时候值的时候，首先通过对象的引用找到对应在堆内存的变量的值，然后把堆内存变量的具体值load到线程本地内存中，建立一个变量副本，之后线程就不再和对象在堆内存变量值有任何关系，而是直接修改副本变量的值，在修改完之后的某一个时刻（线程退出之前），自动把线程变量副本的值回写到对象在堆中变量。这样在堆中的对象的值就产生变化了。
-
-read and load 从主存复制变量到当前工作内存
-
-use and assign 执行代码，改变共享变量值
-
-store and write 用工作内存数据刷新主存相关内容
-
-其中use and
-
-assign 可以多次出现，但是这一些操作并不是原子性，也就是在read load之后，如果主内存count变量发生修改之后，线程工作内存中的值由于已经加载，不会产生对应的变化，所以计算出来的结果会和预期不一样。
 
 ### **39.Java中的NIO，BIO，AIO分别是什么**
 
@@ -244,49 +160,7 @@ AIO:异步非阻塞，服务器实现模式为一个有效请求一个线程，�
 
 Protobuf, Thrift, Hessian, Kryo
 
-### **43.内存溢出和内存泄漏的区别**
 
-内存溢出是指程序在申请内存时，没有足够的内存空间供其使用，出现out of
-
-memory。
-
-内存泄漏是指分配出去的内存不再使用，但是无法回收。
-
-### **44.Java内存模型及各个区域的OOM，如何重现OOM**
-
-这部分内容很重要，详细阅读《深入理解Java虚拟机》，也可以详细阅读这篇文章http://hllvm.group.iteye.com/group/wiki/2857-JVM
-
-### **45.出现OOM如何解决**
-
-一. 可通过命令定期抓取heap dump或者启动参数OOM时自动抓取heap dump文件。
-
-二. 通过对比多个heap dump，以及heap dump的内容，分析代码找出内存占用最多的地方。
-
-三. 分析占用的内存对象，是否是因为错误导致的内存未及时释放，或者数据过多导致的内存溢出。
-
-### **46.用什么工具可以查出内存泄漏**
-
-一. Memory
-
-Analyzer－是一款开源的JAVA内存分析软件，查找内存泄漏，能容易找到大块内存并验证谁在一直占用它，它是基于Eclipse
-
-RCP(Rich Client Platform)，可以下载RCP的独立版本或者Eclipse的插件。
-
-二. JProbe－分析Java的内存泄漏。
-
-三.JProfiler－一个全功能的Java剖析工具，专用于分析J2SE和J2EE应用程序。它把CPU、执行绪和内存的剖析组合在一个强大的应用中，GUI可以找到效能瓶颈、抓出内存泄漏、并解决执行绪的问题。
-
-四. JRockit－用来诊断Java内存泄漏并指出根本原因，专门针对Intel平台并得到优化，能在Intel硬件上获得最高的性能。
-
-五. YourKit-.NET & Java Profiling业界领先的Java和.NET程序性能分析工具。
-
-六.AutomatedQA －AutomatedQA的获奖产品performance profiling和memory debugging工具集的下一代替换产品，支持Microsoft,Borland, Intel, Compaq 和 GNU编译器。可以为.NET和Windows程序生成全面细致的报告，从而帮助您轻松隔离并排除代码中含有的性能问题和内存/资源泄露问题。支持.Net 1.0,1.1,2.0,3.0和Windows 32/64位应用程序。
-
-七.Compuware DevPartner Java Edition－包含Java内存检测,代码覆盖率测试,代码性能测试,线程死锁,分布式应用等几大功能模块
-
-### **47.Java内存管理及回收算法**
-
-阅读这篇文章：http://www.cnblogs.com/hnrainll/archive/2013/11/06/3410042.html
 
 ### **48.Java类加载器及如何加载类(双亲委派)**
 
@@ -582,8 +456,6 @@ http://blog.csdn.net/whuslei/article/details/6442755
 
 参考文章：
 
-http://www.jianshu.com/p/0e28d31600dd
-
 http://my.oschina.net/u/2391658/blog/693277?p={{totalPage}}
 
 ### **89.队列、栈、链表、树、堆、图**
@@ -606,67 +478,11 @@ http://www.cnblogs.com/zhaoyl/archive/2012/09/04/2671156.html
 
 http://blog.csdn.net/rainharder/article/details/7975387
 
-### **93.产生死锁的必要条件**
 
-参考http://blog.sina.com.cn/s/blog_5e3604840100ddgq.html
-
-### **94.死锁预防**
-
-参考http://blog.sina.com.cn/s/blog_5e3604840100ddgq.html
-
-### **95.数据库范式**
 
 参考http://www.360doc.com/content/12/0712/20/5287961_223855037.shtml
 
-### **96.数据库事务隔离级别**
 
-参考http://blog.csdn.net/fg2006/article/details/6937413
-
-### **97.数据库连接池的原理**
-
-参考http://blog.csdn.net/shuaihj/article/details/14223015
-
-### **98.乐观锁和悲观锁**
-
-参考http://www.open-open.com/lib/view/open1452046967245.html
-
-### **99.如何实现不同数据库的数据查询分页**
-
-参考http://blog.csdn.net/yztezhl/article/details/20489387
-
-### **100.SQL注入的原理，如何预防**
-
- 
-
-### **101.数据库索引的实现(B+树介绍、和B树、R树区别)**
-
-参考文章：
-
-http://blog.csdn.net/kennyrose/article/details/7532032
-
-http://www.xuebuyuan.com/2216918.html
-
-### **102.SQL性能优化**
-
-参考文章：
-
-http://database.51cto.com/art/200904/118526.htm
-
-http://www.cnblogs.com/rootq/archive/2008/11/17/1334727.html
-
-### **103.数据库索引的优缺点以及什么时候数据库索引失效**
-
-参考文章：
-
-http://www.cnblogs.com/mxmbk/articles/5226344.html
-
-http://www.cnblogs.com/simplefrog/archive/2012/07/15/2592527.html
-
-http://www.open-open.com/lib/view/open1418476492792.html
-
-http://blog.csdn.net/colin_liu2009/article/details/7301089
-
-http://www.cnblogs.com/hongfei/archive/2012/10/20/2732589.html
 
 ### **104.Redis的数据类型**
 

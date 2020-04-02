@@ -146,6 +146,12 @@ http://www.cnblogs.com/ITtangtang/p/3948786.html
 
 http://ifeve.com/concurrenthashmap/
 
+要点一：锁分段技术
+
+### TreeMap 用什么实现的？
+
+红黑树
+
 
 
 ### HashMap面试题
